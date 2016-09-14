@@ -1,0 +1,1 @@
+KERNEL=="lcd160x", MODE="0666"
