@@ -19,6 +19,12 @@ Used defaults: I2C ...
 ![Alt text](pics/....png?raw=true "...")
 
 
+Schematic
+---------
+
+I use ready to use modules, so there's no real schematic, but a simple description ([Howto connect](schematics/connecting_lcd1602.md)).
+
+
 Usage
 -----
 
@@ -44,17 +50,17 @@ Build the module:
 This will build the driver and the example program ()
 
 
-Install all:	
-	
+Install all:
+
 	make install
 
-This will install the driver to /lib/modules/$(shell uname -r)/kernel, install the udev rule 99-lcd160x.rules to /etc/udev/rules.d and the example program usage to ${HOME}/bin/usage_lcd160x 
+This will install the driver to /lib/modules/$(shell uname -r)/kernel, install the udev rule 99-lcd160x.rules to /etc/udev/rules.d and the example program usage to ${HOME}/bin/usage_lcd160x
 
 
 To get rid of them use:
 
 	make uninstall
-	
+
 This will remove all installed parts.
 
 Summarize:

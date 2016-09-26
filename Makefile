@@ -21,7 +21,7 @@ all:
 	@echo "| make distclean -> complete cleanup                       |/ "
 	@echo "+----------------------------------------------------------+  "
 
-build: driver usage	
+build: driver usage
 
 driver:
 	@echo "+------------------------------------------------------------+"

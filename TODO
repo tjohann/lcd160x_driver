@@ -4,6 +4,18 @@
 
 
 #
+# -------------- 2016-09-26 ----------------------------------------------------
+#
+- create some documentation about lcd usage (register,
+  timing and ...)
+- remove irq handling -> code take from mydriver.git
+  repo
+- take some pics from the display and co (see README.md)
+- simple schematic for wiring
+- check if there info in /proc about the device
+  (Cubietruck, Bananapi ...)
+
+#
 # -------------- 2016-09-14 ----------------------------------------------------
 #
 - create skeleton based on my_driver.git repository         [2016-09-14 -> done]

@@ -2,7 +2,7 @@
 # my simple makefile act as something like a user interface
 #
 
-install: 
+install:
 	sudo install -m 644 99-lcd160x.rules /etc/udev/rules.d/99-lcd160x.rules
 
 uninstall:
