@@ -1,8 +1,8 @@
 /*
- * lcd160x.c -> driver for lcd1602 display
+ * lcd160x.c -> driver for lcd160x display
  *
  * GPL
- * (c) 2016, thorsten.johannvorderbrueggen@t-online.de
+ * (c) 2016-2017, thorsten.johannvorderbrueggen@t-online.de
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ static struct i2c_driver pcf8574_driver = {
 
 static ssize_t
 lcd160x_write(struct file *instance,
-		  const char __user *user, size_t count, loff_t *offset)
+	      const char __user *user, size_t count, loff_t *offset)
 {
 	int not_send;
 	unsigned char value;
@@ -158,6 +158,14 @@ lcd160x_ioctl(struct file *instance, unsigned int cmd,
 
 	data = (SD *) instance->private_data;
 
+        /*
+	 * TODO: cmd needed
+	 *       clear display
+	 *       clear buffer (which rotates?)
+	 *       set cursor
+	 *       set buffer size to rotate?
+	 *       set size of display (16x2 or 16x4 or ...)
+	 */
 	switch (cmd) {
 	case IOCTL_SET_I2C_CLIENT:
 		if (copy_from_user(&user_data,
@@ -215,6 +223,11 @@ pcf8574_probe(struct i2c_client *client,
 	dev_info(drv_dev, "id %p\n", id);
 	dev_info(drv_dev, "id->name %s\n", id->name);
 
+	/*
+	 * TODO: clear the display and display a text like
+	 * "driver %s is ready", driver_name ... or so
+	 */
+
 	return 0;
 }
 
@@ -222,6 +235,11 @@ static int
 pcf8574_remove(struct i2c_client *client)
 {
 	dev_info(drv_dev, "pcf8574_remove\n");
+
+	/*
+	 * TODO: clear display
+	 */
+
 	return 0;
 }
 
