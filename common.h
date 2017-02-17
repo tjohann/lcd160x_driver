@@ -2,7 +2,7 @@
  * lcd160x.c -> driver for lcd1602 displays
  *
  * GPL
- * (c) 2013-2016, thorsten.johannvorderbrueggen@t-online.de
+ * (c) 2013-2017, thorsten.johannvorderbrueggen@t-online.de
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

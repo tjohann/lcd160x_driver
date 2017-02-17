@@ -1,10 +1,10 @@
-# Makefile for lcd160x.c
+# Makefile for pcf8574_lcd160x.c
 #
 # GPL
-# (c) 2016, thorsten.johannvorderbrueggen@t-online.de
+# (c) 2016-2017, thorsten.johannvorderbrueggen@t-online.de
 #
 
-DRIVER=lcd160x
+DRIVER=pcf8574_lcd160x
 
 ifneq ($(KERNELRELEASE),)
 obj-m	:= $(DRIVER).o

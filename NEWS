@@ -2,6 +2,11 @@
 # NEWS
 #
 
+2017-02-17
+- rename driver and usage to (*)pcf8574_lcd160x
+- some first steps toward of integration
+- first steps to make the driver aware of LCD160x and LCD200x
+
 2016-09-26
 - some cleanups
 

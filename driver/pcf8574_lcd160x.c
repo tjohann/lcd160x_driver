@@ -33,6 +33,14 @@ static int pcf8574_probe(struct i2c_client *client,
 			 const struct i2c_device_id *id);
 static int pcf8574_remove(struct i2c_client *client);
 
+static long lcd160x_ioctl(struct file *instance, unsigned int cmd,
+			  unsigned long __user arg);
+static ssize_t lcd160x_write(struct file *instance,
+			     const char __user *user,
+			     size_t count, loff_t *offset);
+static int lcd160x_open(struct inode *dev_node, struct file *instance);
+static int lcd160x_close(struct inode *dev_node, struct file *instance);
+
 static dev_t pcf8574_dev_number;
 static struct cdev *pcf8574_object;
 struct class *pcf8574_class;
@@ -45,23 +53,47 @@ struct _instance_data {
 	int gpio_irq;
 	int adapter_nr;
 	unsigned short addr;
+	unsigned char num_lines;
+	unsigned char num_rows;
 };
 #define SD struct _instance_data
 
 static struct i2c_device_id pcf8574_idtable[] = {
         { "pcf8574_lcd160x", 0 },
+	{ "pcf8574_lcd200x", 1 },
 	{ }
 };
 MODULE_DEVICE_TABLE(i2c, pcf8574_idtable);
 
+#ifdef CONFIG_OF
+static const struct of_device_id pcf8574_of_table[] = {
+	{ .compatible = "nxp,pcf8574_lcd160x" },
+	{ .compatible = "nxp,pcf8574_lcd200x" },
+	{ }
+};
+MODULE_DEVICE_TABLE(of, pcf8574_of_table);
+#endif
+
 static struct i2c_driver pcf8574_driver = {
         .driver = {
                 .name   = "pcf8574_lcd160x",
+		.of_match_table = of_match_ptr(pcf8574_of_table),
         },
         .id_table       = pcf8574_idtable,
         .probe          = pcf8574_probe,
         .remove         = pcf8574_remove,
 };
+
+static struct file_operations fops = {
+       .owner= THIS_MODULE,
+       .write= lcd160x_write,
+       .unlocked_ioctl = lcd160x_ioctl,
+       .open = lcd160x_open,
+       .release = lcd160x_close
+};
+
+
+/*-------------------------------------------------------------------------*/
 
 static ssize_t
 lcd160x_write(struct file *instance,
@@ -206,13 +238,7 @@ error:
 	return -EFAULT;
 }
 
-static struct file_operations fops = {
-	.owner= THIS_MODULE,
-	.write= lcd160x_write,
-	.unlocked_ioctl = lcd160x_ioctl,
-	.open = lcd160x_open,
-	.release = lcd160x_close
-};
+/*-------------------------------------------------------------------------*/
 
 static int
 pcf8574_probe(struct i2c_client *client,
@@ -222,6 +248,11 @@ pcf8574_probe(struct i2c_client *client,
 	dev_info(drv_dev, "client->addr 0x%x", client->addr);
 	dev_info(drv_dev, "id %p\n", id);
 	dev_info(drv_dev, "id->name %s\n", id->name);
+	dev_info(drv_dev, "id->driver_data %lu\n", id->driver_data);
+
+	/*
+	 * TODO: check driver_data to distinguish between LCD1602 and LCD2004
+	 */
 
 	/*
 	 * TODO: clear the display and display a text like
@@ -242,6 +273,8 @@ pcf8574_remove(struct i2c_client *client)
 
 	return 0;
 }
+
+/*-------------------------------------------------------------------------*/
 
 static int __init
 i2c_lcd160x_init(void)

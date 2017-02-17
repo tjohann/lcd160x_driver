@@ -15,10 +15,10 @@ $(PROG): $(OBJ)
 	gcc -o $@ $^
 
 install: $(PROG)
-	install $(PROG) $(HOME)/bin/$(PROG)_lcd160x
+	install $(PROG) $(HOME)/bin/$(PROG)_pcf8574_lcd160x
 
 uninstall:
-	rm -rf $(HOME)/bin/$(PROG)_lcd160x
+	rm -rf $(HOME)/bin/$(PROG)_pcf8574_lcd160x
 
 clean:
 	rm -rf *~
