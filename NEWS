@@ -2,6 +2,9 @@
 # NEWS
 #
 
+2017-11-19
+- fix build errors (asm/uaccess.h -> linux/uaccess.h)
+
 2017-02-17
 - rename driver and usage to (*)pcf8574_lcd160x
 - some first steps toward of integration
